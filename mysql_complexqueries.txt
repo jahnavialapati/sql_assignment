@@ -13,5 +13,40 @@
 
 4)	LIST ALL THE EMPLOYEES WHO ARE WORKING IN FORD’S DEPARTMENT.
         select e.first_name
+        from employees e INNER JOIN departments d
+        on e.department_id=d.department_id and d.department_name="ford";
+
+5)	LIST ALL EMPLOYEE WHO ARE WORKING IN WARD'S DEPARTMENT AND
+	EARNING MORE THEN MARTIN select e.first_name
+        from employees e INNER JOIN departments d
+        on e.department_id=d.department_id and d.department_name='ward' and e.salary>(select salary from employees  where first_name='martin');
+
+6)	DISPLAY EMPLOYEE NUMBER, NAME,DEPT NUMBER, DEPT NAME, AND LOCATION
+        select e.employee_id as EMPNO,e.first_name as ENAME,d.department_id as DEPTNO,d.department_name as DNAME,l.city as LOC
+        from employees e,departments d,locations l
+        where e.department_id=d.department_id and d.location_id=l.location_id;
+
+8)      LIST ALL THE EMPLOYEE WHO ARE WORKING IN NEW YORK
+        select e.first_name ENAME,e.department_id DEPTNO,d.department_name DNAME,l.city LOC
+        from employees e,departments d,locations l
+        where e.department_id=d.department_id and d.location_id=l.location_id and l.city='newyork';
+
+9)	WRITE A SQL STATEMENT TO DISPLAY THE LOWEST PAID EMPLOYEE'S (NAME , SALARY , DEPARTMENT NAME) IN THE RESPECTIVE DEPARTMENT.
+         select e.first_name,min(e.salary),d.department_name
+         from employees e, departments d
+         where e.department_id=d.department_id
+         group by d.department_id;
+
+10)	WRITE A SQL STATEMENT TO DISPLAY THE HIGHEST PAID EMPLOYEE'S (NAME, JOB, MANAGER NAME, SALARY AND DEPARTMENT NAME AND DEPARTMENT NO.) IN THE RESPECTIVE DEPARTMENT.
+        select e.employee_id EMPNO,e.job_id JOB,e.manager_id MGR,max(salary) MAX(SAL),d.department_name DNAME
         from employees e,departments d
-        where e.department_id=d.department_id and d.department_name="ford";
+        where e.department_id=d.department_id
+        group by d.department_id;
+
+
+
+
+14)     FIND THE 2ND MINIMUM SALARY OF THE EMPLOYEE.
+        select min(salary)
+        from employees
+        where salary >(select min(salary) from employees);
