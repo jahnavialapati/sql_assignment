@@ -55,19 +55,63 @@
 
 
 10)	WRITE A SQL STATEMENT TO DISPLAY THE HIGHEST PAID EMPLOYEE'S (NAME, JOB, MANAGER NAME, SALARY AND DEPARTMENT NAME AND DEPARTMENT NO.) IN THE RESPECTIVE DEPARTMENT.
-        select e.employee_id EMPNO,e.job_id JOB,e.manager_id MGR,max(salary) MAX(SAL),d.department_name DNAME
-        from employees e inner join departments d
-        on e.department_id=d.department_id
+        select e1.first_name,e1.employee_id,e1.job_id,e2.manager_id MGR,max(e1.salary),d.department_name,e2.first_name as manager_name
+        from employees e1
+        inner join employees e2
+        on e1.manager_id=e2.employee_id 
+        inner join departments d
+        on d.department_id=e1.department_id
         group by d.department_id;
 
 
 11)	WRITE A SQL STATEMENT TO DISPLAY THE EMPLOYEE NAME (BOSS) AND NUMBER OF EMPLOYEE (SUBORDINATES) DIRECTLY REPORTING TO HIM?
-        select e.first_name as boss,count(e.employee_id) as subordinates
-        from employees e
-        group by e.manager_id;   
+        select e1.first_name as manager_name,count(e2.employee_id) as subordinates
+        from employees e1
+        inner join employees2
+        on e2.manager_id=e1.employee_id
+        group by e2.manager_id;   
   
+
+12)	DISPLAY THE NAMES, DESIGNATION AND SALARIES OF ALL EMPLOYEES WHO HAVE MANAGER ALONG WITH MANAGER'S NAME, DESIGNATION AND MANAGER'S SALARY.
+	(SELF-JOIN)
+        select e.last_name,e.job_id,e.salary,m.last_name,m.job_id,m.salary
+        from employees e JOIN employees m
+        on e.manager_id=m.employee_id;
+
+
+13)    CREATE THE FOLLOWING TABLES:
+       ORDER: {ID, ORDERDATE, ORDERNUMBER}
+       ORDER_ITEM: {ID, ORDERID, PRODUCTID, UNITPRICE, QUANTITY}
+       PRODUCT: {ID, PRODUCTNAME}
+       WRITE A QUERY TO DISPLAY THE FOLLOWING OUTPUT SORTED BY ORDER NO:
+       select o.order_number,o.order_date,i.quantity,i.unit_price,p.product_name
+       from orders o
+       INNER JOIN order_item i 
+       on o.order_id=i.order_id
+       INNER JOIN products p
+       on i.product_id=p.product_id
+       group by o.order_number;     
+
 
 14)     FIND THE 2ND MINIMUM SALARY OF THE EMPLOYEE.
         select min(salary)
         from employees
         where salary >(select min(salary) from employees);
+
+
+15)	FIND THE MAX 3 SALARIES FROM EMPLOYEE TABLE.
+        select DISTINCT salary
+        from employees
+        order by salary desc limit 3
+
+   
+16)     DISPLAY COMMON RECORDS FROM EMP_1 & EMP_2 TABLES. (USE INTERSECT)
+
+
+
+
+
+17)     DISPLAY DEPARTMENT NO WISE TOTAL SALARY WHERE MORE THAN 2 EMPLOYEES EXIST IN A DEPARTMENT.
+
+
+
