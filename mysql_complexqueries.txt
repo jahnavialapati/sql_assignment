@@ -75,7 +75,7 @@
 12)	DISPLAY THE NAMES, DESIGNATION AND SALARIES OF ALL EMPLOYEES WHO HAVE MANAGER ALONG WITH MANAGER'S NAME, DESIGNATION AND MANAGER'S SALARY.
 	(SELF-JOIN)
         select e.last_name,e.job_id,e.salary,m.last_name,m.job_id,m.salary
-        from employees e SELF JOIN employees m
+        from employees e RIGHT JOIN employees m
         on e.manager_id=m.employee_id;
 
 
@@ -105,6 +105,8 @@
         order by salary desc limit 3
 
 
-
-
-
+17)     DISPLAY DEPARTMENT NO WISE TOTAL SALARY WHERE MORE THAN 2 EMPLOYEES EXIST IN A DEPARTMENT.
+        select sum(salary),department_id,count(department_id)
+        from employees
+        group by department_id
+        having count(department_id)>2; 
